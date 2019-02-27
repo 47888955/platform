@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yaoyong.demo.sys.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.yaoyong.demo.sys.entity.Permission">
+	<id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pid"  property="pid" jdbcType="BIGINT" />
+    <result column="plat_type"  property="platType" jdbcType="INTEGER" />
+    <result column="layer"  property="layer" jdbcType="INTEGER" />
+    <result column="is_leaf"  property="isLeaf" jdbcType="INTEGER" />
+    <result column="name"  property="name" jdbcType="VARCHAR" />
+    <result column="perm_code"  property="permCode" jdbcType="VARCHAR" />
+    <result column="perm_url"  property="permUrl" jdbcType="VARCHAR" />
+    <result column="http_method"  property="httpMethod" jdbcType="VARCHAR" />
+    <result column="content"  property="content" jdbcType="VARCHAR" />
+    <result column="is_enable"  property="isEnable" jdbcType="INTEGER" />
+    <result column="is_delete"  property="isDelete" jdbcType="INTEGER" />
+    <result column="version"  property="version" jdbcType="BIGINT" />
+    <result column="appid"  property="appid" jdbcType="VARCHAR" />
+    <result column="create_time"  property="createTime" jdbcType="BIGINT" />
+    <result column="update_time"  property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    id,pid,plat_type,layer,is_leaf,name,perm_code,perm_url,http_method,content,is_enable,is_delete,version,appid,create_time,update_time
+  </sql>
+	
+  <sql id="findWhere">
+    from permission
+    <where>
+       <if test="id != null">
+           and id = #{id,jdbcType=BIGINT}  
+       </if>
+       <if test="pid != null">
+           and pid = #{pid,jdbcType=BIGINT}  
+       </if>
+       <if test="platType != null">
+           and plat_type = #{platType,jdbcType=INTEGER}  
+       </if>
+       <if test="layer != null">
+           and layer = #{layer,jdbcType=INTEGER}  
+       </if>
+       <if test="isLeaf != null">
+           and is_leaf = #{isLeaf,jdbcType=INTEGER}  
+       </if>
+       <if test="name != null">
+           and name = #{name,jdbcType=VARCHAR}  
+       </if>
+       <if test="permCode != null">
+           and perm_code = #{permCode,jdbcType=VARCHAR}  
+       </if>
+       <if test="permUrl != null">
+           and perm_url = #{permUrl,jdbcType=VARCHAR}  
+       </if>
+       <if test="httpMethod != null">
+           and http_method = #{httpMethod,jdbcType=VARCHAR}  
+       </if>
+       <if test="content != null">
+           and content = #{content,jdbcType=VARCHAR}  
+       </if>
+       <if test="isEnable != null">
+           and is_enable = #{isEnable,jdbcType=INTEGER}  
+       </if>
+       <if test="isDelete != null">
+           and is_delete = #{isDelete,jdbcType=INTEGER}  
+       </if>
+       <if test="version != null">
+           and version = #{version,jdbcType=BIGINT}  
+       </if>
+       <if test="appid != null">
+           and appid = #{appid,jdbcType=VARCHAR}  
+       </if>
+       <if test="createTime != null">
+           and create_time = #{createTime,jdbcType=BIGINT}  
+       </if>
+       <if test="updateTime != null">
+           and update_time = #{updateTime,jdbcType=BIGINT}  
+       </if>
+    </where>
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from permission where id =   #{id,jdbcType=BIGINT}               	
+  </select>
+
+  <select id="findList" parameterType="com.yaoyong.demo.sys.entity.Permission" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+  
+  <select id="findByField" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from permission
+    where id =   #{id,jdbcType=BIGINT}                	
+  </delete>
+
+  <insert id="save" parameterType="com.yaoyong.demo.sys.entity.Permission" useGeneratedKeys = "true" keyProperty = "id">
+      insert into permission
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            id,
+        </if>
+        <if test="pid != null">
+            pid,
+        </if>
+        <if test="platType != null">
+            plat_type,
+        </if>
+        <if test="layer != null">
+            layer,
+        </if>
+        <if test="isLeaf != null">
+            is_leaf,
+        </if>
+        <if test="name != null">
+            name,
+        </if>
+        <if test="permCode != null">
+            perm_code,
+        </if>
+        <if test="permUrl != null">
+            perm_url,
+        </if>
+        <if test="httpMethod != null">
+            http_method,
+        </if>
+        <if test="content != null">
+            content,
+        </if>
+        <if test="isEnable != null">
+            is_enable,
+        </if>
+        <if test="isDelete != null">
+            is_delete,
+        </if>
+        <if test="version != null">
+            version,
+        </if>
+        <if test="appid != null">
+            appid,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        <if test="updateTime != null">
+            update_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+        #{id,jdbcType=BIGINT} ,
+        </if>
+        <if test="pid != null">
+        #{pid,jdbcType=BIGINT} ,
+        </if>
+        <if test="platType != null">
+        #{platType,jdbcType=INTEGER} ,
+        </if>
+        <if test="layer != null">
+        #{layer,jdbcType=INTEGER} ,
+        </if>
+        <if test="isLeaf != null">
+        #{isLeaf,jdbcType=INTEGER} ,
+        </if>
+        <if test="name != null">
+        #{name,jdbcType=VARCHAR} ,
+        </if>
+        <if test="permCode != null">
+        #{permCode,jdbcType=VARCHAR} ,
+        </if>
+        <if test="permUrl != null">
+        #{permUrl,jdbcType=VARCHAR} ,
+        </if>
+        <if test="httpMethod != null">
+        #{httpMethod,jdbcType=VARCHAR} ,
+        </if>
+        <if test="content != null">
+        #{content,jdbcType=VARCHAR} ,
+        </if>
+        <if test="isEnable != null">
+        #{isEnable,jdbcType=INTEGER} ,
+        </if>
+        <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER} ,
+        </if>
+        <if test="version != null">
+        #{version,jdbcType=BIGINT} ,
+        </if>
+        <if test="appid != null">
+        #{appid,jdbcType=VARCHAR} ,
+        </if>
+        <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT} ,
+        </if>
+        <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT} ,
+        </if>
+      </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.yaoyong.demo.sys.entity.Permission">
+      update permission
+      <set>
+      <if test="id != null">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+      pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="platType != null">
+      plat_type = #{platType,jdbcType=INTEGER},
+      </if>
+      <if test="layer != null">
+      layer = #{layer,jdbcType=INTEGER},
+      </if>
+      <if test="isLeaf != null">
+      is_leaf = #{isLeaf,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+      name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="permCode != null">
+      perm_code = #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permUrl != null">
+      perm_url = #{permUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null">
+      http_method = #{httpMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+      content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+      version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null">
+      appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+      create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+      update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      </set>
+      where id =   #{id,jdbcType=BIGINT}                	
+  </update>
+  
+  	<select id="selectPermissionPage" resultType="com.yaoyong.demo.sys.entity.Permission">
+		SELECT* FROM permission
+	</select>
+
+	<select id="selectPermissionWrapperPage" resultType="com.yaoyong.demo.sys.entity.Permission">
+		SELECT * FROM permission ${ew.sqlSegment}
+	</select>
+  
+</mapper>
+

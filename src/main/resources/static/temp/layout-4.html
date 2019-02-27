@@ -1,0 +1,121 @@
+    <h2>系統字典管理</h2>
+    <p>包括业务字典和系统字典</p>
+    
+    <table id="dg"  class="easyui-datagrid" style="width:98%;height:auto;"
+            toolbar="#toolbar" pagination="true"
+            rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+            <tr>
+
+                <th field="stauts" width="50">字典表</th>
+                <th field="msg">字典字典名</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新建字典表</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑字典</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除字典</a>
+    </div>
+    
+    <div id="dlg" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+            <h3>字典信息</h3>
+            <div style="margin-bottom:10px">
+                <input name="name" class="easyui-textbox" required="true" label="中文名称：" style="width:100%">
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="code" class="easyui-textbox" required="true" label="CODE：" style="width:100%">
+            </div>
+
+                        <div style="margin-bottom:10px">
+                <input name="content" class="easyui-textbox" required="true"  label="描述：" style="width:100%">
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveDictionary()" style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+    <script type="text/javascript">
+    
+//     $.ajax({
+//         type: 'GET',
+//         url:'http://localhost:8080/v1/dictionary?id=7',
+//         dataType: 'json',
+//         contentType: "application/json",
+//         success: function( result ) {
+//            alert(result.data.id);
+          
+//         }
+//     });
+
+    
+    $('#dg').datagrid({
+    url:"/v1/dictionary?id=7",
+    method:"get"});
+
+    
+        var url;
+        function newUser(){
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle','新建字典');
+            $('#fm').form('clear');
+            url = '/v1/dictionary';
+        }
+        function editUser(){
+            var row = $('#dg').datagrid('getSelected');
+            if (row){
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle','编辑字典');
+                $('#fm').form('load',row);
+                url = 'update_user.php?id='+row.id;
+            }
+        }
+        function saveDictionary(){
+            $('#fm').form('submit',{
+                url: url,
+                onSubmit: function(){
+                    return $(this).form('validate');
+                },
+                dataType: 'json',
+                contentType: "application/json",
+                data: {
+                    name: "",
+                    code: "",
+                    content: ""
+                   },
+
+                success: function(result){
+                    var result = eval('('+result+')');
+
+                    if (result.errorMsg){
+                        $.messager.show({
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                    } else {
+                        $('#dlg').dialog('close');        // close the dialog
+                        $('#dg').datagrid('reload');    // reload the user data
+                    }
+                }
+            });
+        }
+        function destroyUser(){
+            var row = $('#dg').datagrid('getSelected');
+            if (row){
+                $.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+                    if (r){
+                        $.post('destroy_user.php',{id:row.id},function(result){
+                            if (result.success){
+                                $('#dg').datagrid('reload');    // reload the user data
+                            } else {
+                                $.messager.show({    // show error message
+                                    title: 'Error',
+                                    msg: result.errorMsg
+                                });
+                            }
+                        },'json');
+                    }
+                });
+            }
+        }
+    </script>

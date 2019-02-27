@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yaoyong.demo.sys.mapper.LogOperateMapper">
+  <resultMap id="BaseResultMap" type="com.yaoyong.demo.sys.entity.LogOperate">
+	<id column="log_id" property="id" jdbcType="BIGINT" />
+    <result column="appid"  property="appid" jdbcType="VARCHAR" />
+    <result column="operate_id"  property="operateId" jdbcType="VARCHAR" />
+    <result column="operate_name"  property="operateName" jdbcType="VARCHAR" />
+    <result column="plat_type"  property="platType" jdbcType="INTEGER" />
+    <result column="http_url"  property="httpUrl" jdbcType="VARCHAR" />
+    <result column="http_body"  property="httpBody" jdbcType="VARCHAR" />
+    <result column="user_ip"  property="userIp" jdbcType="VARCHAR" />
+    <result column="create_time"  property="createTime" jdbcType="BIGINT" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    log_id,appid,operate_id,operate_name,plat_type,http_url,http_body,user_ip,create_time
+  </sql>
+	
+  <sql id="findWhere">
+    from log_operate
+    <where>
+       <if test="logId != null">
+           and log_id = #{logId,jdbcType=BIGINT}  
+       </if>
+       <if test="appid != null">
+           and appid = #{appid,jdbcType=VARCHAR}  
+       </if>
+       <if test="operateId != null">
+           and operate_id = #{operateId,jdbcType=VARCHAR}  
+       </if>
+       <if test="operateName != null">
+           and operate_name = #{operateName,jdbcType=VARCHAR}  
+       </if>
+       <if test="platType != null">
+           and plat_type = #{platType,jdbcType=INTEGER}  
+       </if>
+       <if test="httpUrl != null">
+           and http_url = #{httpUrl,jdbcType=VARCHAR}  
+       </if>
+       <if test="httpBody != null">
+           and http_body = #{httpBody,jdbcType=VARCHAR}  
+       </if>
+       <if test="userIp != null">
+           and user_ip = #{userIp,jdbcType=VARCHAR}  
+       </if>
+       <if test="createTime != null">
+           and create_time = #{createTime,jdbcType=BIGINT}  
+       </if>
+    </where>
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from log_operate where id =   #{logId,jdbcType=BIGINT}        	
+  </select>
+
+  <select id="findList" parameterType="com.yaoyong.demo.sys.entity.LogOperate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+  
+  <select id="findByField" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from log_operate
+    where id =   #{logId,jdbcType=BIGINT}         	
+  </delete>
+
+  <insert id="save" parameterType="com.yaoyong.demo.sys.entity.LogOperate" useGeneratedKeys = "true" keyProperty = "id">
+      insert into log_operate
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="logId != null">
+            log_id,
+        </if>
+        <if test="appid != null">
+            appid,
+        </if>
+        <if test="operateId != null">
+            operate_id,
+        </if>
+        <if test="operateName != null">
+            operate_name,
+        </if>
+        <if test="platType != null">
+            plat_type,
+        </if>
+        <if test="httpUrl != null">
+            http_url,
+        </if>
+        <if test="httpBody != null">
+            http_body,
+        </if>
+        <if test="userIp != null">
+            user_ip,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="logId != null">
+        #{logId,jdbcType=BIGINT} ,
+        </if>
+        <if test="appid != null">
+        #{appid,jdbcType=VARCHAR} ,
+        </if>
+        <if test="operateId != null">
+        #{operateId,jdbcType=VARCHAR} ,
+        </if>
+        <if test="operateName != null">
+        #{operateName,jdbcType=VARCHAR} ,
+        </if>
+        <if test="platType != null">
+        #{platType,jdbcType=INTEGER} ,
+        </if>
+        <if test="httpUrl != null">
+        #{httpUrl,jdbcType=VARCHAR} ,
+        </if>
+        <if test="httpBody != null">
+        #{httpBody,jdbcType=VARCHAR} ,
+        </if>
+        <if test="userIp != null">
+        #{userIp,jdbcType=VARCHAR} ,
+        </if>
+        <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT} ,
+        </if>
+      </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.yaoyong.demo.sys.entity.LogOperate">
+      update log_operate
+      <set>
+      <if test="logId != null">
+      log_id = #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null">
+      appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null">
+      operate_id = #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null">
+      operate_name = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="platType != null">
+      plat_type = #{platType,jdbcType=INTEGER},
+      </if>
+      <if test="httpUrl != null">
+      http_url = #{httpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="httpBody != null">
+      http_body = #{httpBody,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null">
+      user_ip = #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+      create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      </set>
+      where id =   #{logId,jdbcType=BIGINT}         	
+  </update>
+  
+  	<select id="selectLogOperatePage" resultType="com.yaoyong.demo.sys.entity.LogOperate">
+		SELECT* FROM log_operate
+	</select>
+
+	<select id="selectLogOperateWrapperPage" resultType="com.yaoyong.demo.sys.entity.LogOperate">
+		SELECT * FROM log_operate ${ew.sqlSegment}
+	</select>
+  
+</mapper>
+

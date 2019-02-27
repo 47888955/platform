@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic CRUD Application - jQuery EasyUI CRUD Demo</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+    <h2>京东后台管理系统</h2>
+    <p>京东电子商务后台数据管理系统1.0</p>
+    <div style="margin:20px 0;"></div>
+    <div class="easyui-layout" style="width:100%;height:350px;">
+<!--         <div data-options="region:'north'" style="height:50px"></div> -->
+        <div data-options="region:'south',split:true" style="height:50px;"></div>
+        <div data-options="region:'west',split:true" title="菜单管理" style="width:180px;">
+        
+        <div title="快捷菜单" data-options="iconCls:'icon-application-cascade'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+    			                	<li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="temp/layout-4.html" iframe="0">字典管理</a></li>
+    			
+                	<li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="temp/layout-2.html" iframe="0">菜单导航</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">用户管理</a></li>
+                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">角色管理</a></li>
+                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">数据字典</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">系统参数</a></li>
+                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">操作日志</a></li>
+                </ul>
+            </div>
+        
+        </div>
+        <div data-options="region:'center',iconCls:'icon-ok'">
+        
+          <div class="easyui-tabs" style="width:700px;height:auto">
+        <div title="About" style="padding:10px">
+            <p style="font-size:14px">jQuery EasyUI framework helps you build your web pages easily.</p>
+            <ul>
+                <li>easyui is a collection of user-interface plugin based on jQuery.</li>
+                <li>easyui provides essential functionality for building modem, interactive, javascript applications.</li>
+                <li>using easyui you don't need to write many javascript code, you usually defines user-interface by writing some HTML markup.</li>
+                <li>complete framework for HTML5 web page.</li>
+                <li>easyui save your time and scales while developing your products.</li>
+                <li>easyui is very easy but powerful.</li>
+            </ul>
+        </div>
+        <div title="My Documents" style="padding:10px">
+            <ul class="easyui-tree" data-options="url:'tree_data1.json',method:'get',animate:true"></ul>
+        </div>
+        <div title="Help" data-options="iconCls:'icon-help',closable:true" style="padding:10px">
+            This is the help content.
+        </div>
+    </div>
+  
+        </div>
+    </div>
+ 
+</body>
+</html>

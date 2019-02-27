@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yaoyong.demo.sys.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yaoyong.demo.sys.entity.UserRole">
+	<id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id"  property="userId" jdbcType="VARCHAR" />
+    <result column="role_id"  property="roleId" jdbcType="BIGINT" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    id,user_id,role_id
+  </sql>
+	
+  <sql id="findWhere">
+    from user_role
+    <where>
+       <if test="id != null">
+           and id = #{id,jdbcType=BIGINT}  
+       </if>
+       <if test="userId != null">
+           and user_id = #{userId,jdbcType=VARCHAR}  
+       </if>
+       <if test="roleId != null">
+           and role_id = #{roleId,jdbcType=BIGINT}  
+       </if>
+    </where>
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from user_role where id =   #{id,jdbcType=BIGINT}  	
+  </select>
+
+  <select id="findList" parameterType="com.yaoyong.demo.sys.entity.UserRole" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+  
+  <select id="findByField" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from user_role
+    where id =   #{id,jdbcType=BIGINT}   	
+  </delete>
+
+  <insert id="save" parameterType="com.yaoyong.demo.sys.entity.UserRole" useGeneratedKeys = "true" keyProperty = "id">
+      insert into user_role
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            id,
+        </if>
+        <if test="userId != null">
+            user_id,
+        </if>
+        <if test="roleId != null">
+            role_id,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+        #{id,jdbcType=BIGINT} ,
+        </if>
+        <if test="userId != null">
+        #{userId,jdbcType=VARCHAR} ,
+        </if>
+        <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT} ,
+        </if>
+      </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.yaoyong.demo.sys.entity.UserRole">
+      update user_role
+      <set>
+      <if test="id != null">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+      user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+      role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      </set>
+      where id =   #{id,jdbcType=BIGINT}   	
+  </update>
+  
+  	<select id="selectUserRolePage" resultType="com.yaoyong.demo.sys.entity.UserRole">
+		SELECT* FROM user_role
+	</select>
+
+	<select id="selectUserRoleWrapperPage" resultType="com.yaoyong.demo.sys.entity.UserRole">
+		SELECT * FROM user_role ${ew.sqlSegment}
+	</select>
+  
+</mapper>
+

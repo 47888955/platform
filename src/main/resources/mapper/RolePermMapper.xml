@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yaoyong.demo.sys.mapper.RolePermMapper">
+  <resultMap id="BaseResultMap" type="com.yaoyong.demo.sys.entity.RolePerm">
+	<id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role_id"  property="roleId" jdbcType="BIGINT" />
+    <result column="per_id"  property="perId" jdbcType="BIGINT" />
+    <result column="perm_code"  property="permCode" jdbcType="VARCHAR" />
+    <result column="perm_url"  property="permUrl" jdbcType="VARCHAR" />
+    <result column="http_method"  property="httpMethod" jdbcType="VARCHAR" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    id,role_id,per_id,perm_code,perm_url,http_method
+  </sql>
+	
+  <sql id="findWhere">
+    from role_perm
+    <where>
+       <if test="id != null">
+           and id = #{id,jdbcType=BIGINT}  
+       </if>
+       <if test="roleId != null">
+           and role_id = #{roleId,jdbcType=BIGINT}  
+       </if>
+       <if test="perId != null">
+           and per_id = #{perId,jdbcType=BIGINT}  
+       </if>
+       <if test="permCode != null">
+           and perm_code = #{permCode,jdbcType=VARCHAR}  
+       </if>
+       <if test="permUrl != null">
+           and perm_url = #{permUrl,jdbcType=VARCHAR}  
+       </if>
+       <if test="httpMethod != null">
+           and http_method = #{httpMethod,jdbcType=VARCHAR}  
+       </if>
+    </where>
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from role_perm where id =   #{id,jdbcType=BIGINT}     	
+  </select>
+
+  <select id="findList" parameterType="com.yaoyong.demo.sys.entity.RolePerm" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+  
+  <select id="findByField" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from role_perm
+    where id =   #{id,jdbcType=BIGINT}      	
+  </delete>
+
+  <insert id="save" parameterType="com.yaoyong.demo.sys.entity.RolePerm" useGeneratedKeys = "true" keyProperty = "id">
+      insert into role_perm
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            id,
+        </if>
+        <if test="roleId != null">
+            role_id,
+        </if>
+        <if test="perId != null">
+            per_id,
+        </if>
+        <if test="permCode != null">
+            perm_code,
+        </if>
+        <if test="permUrl != null">
+            perm_url,
+        </if>
+        <if test="httpMethod != null">
+            http_method,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+        #{id,jdbcType=BIGINT} ,
+        </if>
+        <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT} ,
+        </if>
+        <if test="perId != null">
+        #{perId,jdbcType=BIGINT} ,
+        </if>
+        <if test="permCode != null">
+        #{permCode,jdbcType=VARCHAR} ,
+        </if>
+        <if test="permUrl != null">
+        #{permUrl,jdbcType=VARCHAR} ,
+        </if>
+        <if test="httpMethod != null">
+        #{httpMethod,jdbcType=VARCHAR} ,
+        </if>
+      </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.yaoyong.demo.sys.entity.RolePerm">
+      update role_perm
+      <set>
+      <if test="id != null">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+      role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="perId != null">
+      per_id = #{perId,jdbcType=BIGINT},
+      </if>
+      <if test="permCode != null">
+      perm_code = #{permCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permUrl != null">
+      perm_url = #{permUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="httpMethod != null">
+      http_method = #{httpMethod,jdbcType=VARCHAR},
+      </if>
+      </set>
+      where id =   #{id,jdbcType=BIGINT}      	
+  </update>
+  
+  	<select id="selectRolePermPage" resultType="com.yaoyong.demo.sys.entity.RolePerm">
+		SELECT* FROM role_perm
+	</select>
+
+	<select id="selectRolePermWrapperPage" resultType="com.yaoyong.demo.sys.entity.RolePerm">
+		SELECT * FROM role_perm ${ew.sqlSegment}
+	</select>
+  
+</mapper>
+

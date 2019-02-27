@@ -1,21 +1,311 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.baomidou.springboot.mapper.UserMapper">
 
-	<!-- 通用查询结果列 -->
-	<sql id="Base_Column_List">
-		test_id AS testId, name, age, test_type AS testType, role, phone
-	</sql>
+<mapper namespace="com.yaoyong.demo.sys.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.yaoyong.demo.sys.entity.User">
+	<id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id"  property="userId" jdbcType="VARCHAR" />
+    <result column="role_id"  property="roleId" jdbcType="BIGINT" />
+    <result column="user_type"  property="userType" jdbcType="INTEGER" />
+    <result column="merchant_id"  property="merchantId" jdbcType="VARCHAR" />
+    <result column="user_status"  property="userStatus" jdbcType="INTEGER" />
+    <result column="login_name"  property="loginName" jdbcType="VARCHAR" />
+    <result column="user_name"  property="userName" jdbcType="VARCHAR" />
+    <result column="real_name"  property="realName" jdbcType="VARCHAR" />
+    <result column="password"  property="password" jdbcType="VARCHAR" />
+    <result column="email"  property="email" jdbcType="VARCHAR" />
+    <result column="mobile"  property="mobile" jdbcType="VARCHAR" />
+    <result column="approve"  property="approve" jdbcType="INTEGER" />
+    <result column="is_enable"  property="isEnable" jdbcType="INTEGER" />
+    <result column="is_delete"  property="isDelete" jdbcType="INTEGER" />
+    <result column="version"  property="version" jdbcType="BIGINT" />
+    <result column="appid"  property="appid" jdbcType="VARCHAR" />
+    <result column="create_time"  property="createTime" jdbcType="BIGINT" />
+    <result column="update_time"  property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    id,user_id,role_id,user_type,merchant_id,user_status,login_name,user_name,real_name,password,email,mobile,approve,is_enable,is_delete,version,appid,create_time,update_time
+  </sql>
+	
+  <sql id="findWhere">
+    from user
+    <where>
+       <if test="id != null">
+           and id = #{id,jdbcType=BIGINT}  
+       </if>
+       <if test="userId != null">
+           and user_id = #{userId,jdbcType=VARCHAR}  
+       </if>
+       <if test="roleId != null">
+           and role_id = #{roleId,jdbcType=BIGINT}  
+       </if>
+       <if test="userType != null">
+           and user_type = #{userType,jdbcType=INTEGER}  
+       </if>
+       <if test="merchantId != null">
+           and merchant_id = #{merchantId,jdbcType=VARCHAR}  
+       </if>
+       <if test="userStatus != null">
+           and user_status = #{userStatus,jdbcType=INTEGER}  
+       </if>
+       <if test="loginName != null">
+           and login_name = #{loginName,jdbcType=VARCHAR}  
+       </if>
+       <if test="userName != null">
+           and user_name = #{userName,jdbcType=VARCHAR}  
+       </if>
+       <if test="realName != null">
+           and real_name = #{realName,jdbcType=VARCHAR}  
+       </if>
+       <if test="password != null">
+           and password = #{password,jdbcType=VARCHAR}  
+       </if>
+       <if test="email != null">
+           and email = #{email,jdbcType=VARCHAR}  
+       </if>
+       <if test="mobile != null">
+           and mobile = #{mobile,jdbcType=VARCHAR}  
+       </if>
+       <if test="approve != null">
+           and approve = #{approve,jdbcType=INTEGER}  
+       </if>
+       <if test="isEnable != null">
+           and is_enable = #{isEnable,jdbcType=INTEGER}  
+       </if>
+       <if test="isDelete != null">
+           and is_delete = #{isDelete,jdbcType=INTEGER}  
+       </if>
+       <if test="version != null">
+           and version = #{version,jdbcType=BIGINT}  
+       </if>
+       <if test="appid != null">
+           and appid = #{appid,jdbcType=VARCHAR}  
+       </if>
+       <if test="createTime != null">
+           and create_time = #{createTime,jdbcType=BIGINT}  
+       </if>
+       <if test="updateTime != null">
+           and update_time = #{updateTime,jdbcType=BIGINT}  
+       </if>
+    </where>
+  </sql>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from user where id =   #{id,jdbcType=BIGINT}                  	
+  </select>
 
-	<delete id="deleteAll">
-		DELETE FROM USER
-	</delete>
+  <select id="findList" parameterType="com.yaoyong.demo.sys.entity.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
+  
+  <select id="findByField" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <include refid="findWhere" />
+  </select>
 
-	<select id="selectListByWrapper" resultType="com.baomidou.springboot.entity.User">
-		SELECT * FROM USER
-		<!-- 判断 wrapper 是否为空 emptyOfWhere -->
-		<where>
-			${ew.sqlSegment}
-		</where>
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from user
+    where id =   #{id,jdbcType=BIGINT}                   	
+  </delete>
+
+  <insert id="save" parameterType="com.yaoyong.demo.sys.entity.User" useGeneratedKeys = "true" keyProperty = "id">
+      insert into user
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+            id,
+        </if>
+        <if test="userId != null">
+            user_id,
+        </if>
+        <if test="roleId != null">
+            role_id,
+        </if>
+        <if test="userType != null">
+            user_type,
+        </if>
+        <if test="merchantId != null">
+            merchant_id,
+        </if>
+        <if test="userStatus != null">
+            user_status,
+        </if>
+        <if test="loginName != null">
+            login_name,
+        </if>
+        <if test="userName != null">
+            user_name,
+        </if>
+        <if test="realName != null">
+            real_name,
+        </if>
+        <if test="password != null">
+            password,
+        </if>
+        <if test="email != null">
+            email,
+        </if>
+        <if test="mobile != null">
+            mobile,
+        </if>
+        <if test="approve != null">
+            approve,
+        </if>
+        <if test="isEnable != null">
+            is_enable,
+        </if>
+        <if test="isDelete != null">
+            is_delete,
+        </if>
+        <if test="version != null">
+            version,
+        </if>
+        <if test="appid != null">
+            appid,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        <if test="updateTime != null">
+            update_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+        #{id,jdbcType=BIGINT} ,
+        </if>
+        <if test="userId != null">
+        #{userId,jdbcType=VARCHAR} ,
+        </if>
+        <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT} ,
+        </if>
+        <if test="userType != null">
+        #{userType,jdbcType=INTEGER} ,
+        </if>
+        <if test="merchantId != null">
+        #{merchantId,jdbcType=VARCHAR} ,
+        </if>
+        <if test="userStatus != null">
+        #{userStatus,jdbcType=INTEGER} ,
+        </if>
+        <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR} ,
+        </if>
+        <if test="userName != null">
+        #{userName,jdbcType=VARCHAR} ,
+        </if>
+        <if test="realName != null">
+        #{realName,jdbcType=VARCHAR} ,
+        </if>
+        <if test="password != null">
+        #{password,jdbcType=VARCHAR} ,
+        </if>
+        <if test="email != null">
+        #{email,jdbcType=VARCHAR} ,
+        </if>
+        <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR} ,
+        </if>
+        <if test="approve != null">
+        #{approve,jdbcType=INTEGER} ,
+        </if>
+        <if test="isEnable != null">
+        #{isEnable,jdbcType=INTEGER} ,
+        </if>
+        <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER} ,
+        </if>
+        <if test="version != null">
+        #{version,jdbcType=BIGINT} ,
+        </if>
+        <if test="appid != null">
+        #{appid,jdbcType=VARCHAR} ,
+        </if>
+        <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT} ,
+        </if>
+        <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT} ,
+        </if>
+      </trim>
+  </insert>
+  
+  <update id="updateById" parameterType="com.yaoyong.demo.sys.entity.User">
+      update user
+      <set>
+      <if test="id != null">
+      id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+      user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+      role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="userType != null">
+      user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+      merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+      user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null">
+      login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+      user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+      real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+      password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+      email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+      mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="approve != null">
+      approve = #{approve,jdbcType=INTEGER},
+      </if>
+      <if test="isEnable != null">
+      is_enable = #{isEnable,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+      version = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null">
+      appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+      create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+      update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      </set>
+      where id =   #{id,jdbcType=BIGINT}                   	
+  </update>
+  
+  	<select id="selectUserPage" resultType="com.yaoyong.demo.sys.entity.User">
+		SELECT* FROM user
 	</select>
+
+	<select id="selectUserWrapperPage" resultType="com.yaoyong.demo.sys.entity.User">
+		SELECT * FROM user ${ew.sqlSegment}
+	</select>
+  
 </mapper>
+
